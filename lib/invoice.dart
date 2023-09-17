@@ -5,19 +5,18 @@ class Invoice{
   String? product_name;
   String? product_type;
   String? tax_type;
-
-  String? product_quantity1;
-  String? product_price1;
-  String? tax_rate1;
-  String? total1;
+  String? address;
+  String? sales_date;
 
   int? product_quantity;
   int? product_price;
   int? tax_rate;
+  double? tax_amount;
   int? total;
-
+  double? payamount;
 
   void display(){
     print("name $cust_name");
   }
+
 }

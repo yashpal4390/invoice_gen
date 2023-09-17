@@ -20,6 +20,8 @@ TextEditingController quantityController = TextEditingController();
 TextEditingController priceController = TextEditingController();
 TextEditingController tax_typeController = TextEditingController();
 TextEditingController tax_percentageController = TextEditingController();
+TextEditingController address_Controller = TextEditingController();
+TextEditingController sales_dateController = TextEditingController();
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
 class _HomePageState extends State<HomePage> {
 
@@ -48,6 +50,30 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   decoration: InputDecoration(hintText: "Customer Name", hintStyle: TextStyle(color: Colors.grey),contentPadding: EdgeInsets.all(5)),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: address_Controller,
+                  validator: (value) {
+                    if (value?.isEmpty ?? false) {
+                      return "Enter Customer Address";
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(hintText: "Customer City", hintStyle: TextStyle(color: Colors.grey),contentPadding: EdgeInsets.all(5)),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: sales_dateController,
+                  validator: (value) {
+                    if (value?.isEmpty ?? false) {
+                      return "Enter Sales Date";
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(hintText: "Sales Date", hintStyle: TextStyle(color: Colors.grey),contentPadding: EdgeInsets.all(5)),
                 ),
                 SizedBox(height: 20),
                 TextFormField(
@@ -104,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(width: 10),
                     Flexible(
                       child:TextFormField(
+
                         controller: priceController,
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
@@ -150,7 +177,6 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SizedBox(height: 60),
-                SizedBox(height: 50),
                 ElevatedButton(
                     onPressed: ()  {
                       if (formKey.currentState?.validate() ?? false) {
@@ -170,15 +196,19 @@ class _HomePageState extends State<HomePage> {
                         invoice.product_name=product_nameController.text;
                         invoice.product_type=product_typeController.text;
                         invoice.tax_type=tax_typeController.text;
+                        invoice.address=address_Controller.text;
+                        invoice.sales_date=sales_dateController.text;
 
-                        invoice.product_quantity1=quantityController.text;
-                        invoice.product_price1=priceController.text;
-                        invoice.tax_rate1=priceController.text;
+                        invoice.product_price = int.parse(priceController.text);
+                        invoice.product_quantity = int.parse(quantityController.text);
+                        invoice.tax_rate = int.parse(tax_percentageController.text);
 
+                        invoice.total=(invoice.product_quantity!*invoice.product_price!);
 
-                        // invoice.total=(invoice.product_quantity!*invoice.product_price!);
+                        invoice.tax_amount=(invoice.tax_rate!/100*invoice.total!);
+
+                        invoice.payamount=(invoice.total!+invoice.tax_amount!);
                         Navigator.pushNamed(context,pdfScreenRoute,arguments: invoice);
-                        print("Total ${invoice.total}");
                       } else {
                         print("Invalid");
                       }

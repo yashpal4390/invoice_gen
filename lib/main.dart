@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:invoice_gen/splash_screen.dart';
 import 'pdf_screen.dart';
 import 'constant.dart';
 import 'home_page.dart';
@@ -22,8 +23,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: SplashScreen(),
       routes: {
+        splashScreenRoute: (context) => SplashScreen(),
+        homePage: (context) => HomePage(),
         pdfScreenRoute: (context) => PDFscreen(),
       },
     );
